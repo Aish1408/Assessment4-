@@ -1,0 +1,116 @@
+---
+title: "RNA-Seq Analysis, Growth Data Analysis, and Biological Sequence Diversity
+  in Comparative Genomics"
+author: "Aishwarya,shrestha,Swanitha"
+date: "2024-10-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Install the readr package 
+install.packages("readr")
+```
+
+```{r}
+# Load the readr package
+library(readr)
+# Define the URL for the growth data
+url <- "https://raw.githubusercontent.com/ghazkha/Assessment4/refs/heads/main/growth_data.csv"
+
+# Read the growth data
+growth_data <- read_csv(url)
+# Display the first few rows of the dataset
+head(growth_data)
+```
+
+
+```{r}
+# Display the column names of the growth_data dataset
+colnames(growth_data)
+```
+The  R code begins by installing the `readr` package and loading it to facilitate data import. It then defines a URL where the growth data CSV file is located and uses the `read_csv` function to read the data into an R object called `growth_data`. The `head()` function is utilized to display the first few rows of the dataset, providing a quick preview of the data structure. Finally, the `colnames()` function is called to extract and display the column names of the `growth_data` object, allowing users to understand the variables included in the dataset.
+The dataset comprises six columns: "Site," "TreeID," and four circumference measurements (in cm) for the years 2005, 2010, 2015, and 2020, with a total of 100 rows. The "Site" column categorizes trees into "northeast" and "southwest" regions, while "TreeID" uniquely identifies each tree. The numerical columns document the circumference growth over time. Sample rows illustrate how each tree's growth is tracked across the specified years.
+```{r}
+# Load the necessary packages
+library(readr)
+# Calculate mean and standard deviation using the $ operator
+mean_start <- mean(growth_data$Circumf_2005_cm, na.rm = TRUE)
+sd_start <- sd(growth_data$Circumf_2005_cm, na.rm = TRUE)
+
+mean_end <- mean(growth_data$Circumf_2020_cm, na.rm = TRUE)
+sd_end <- sd(growth_data$Circumf_2020_cm, na.rm = TRUE)
+
+# Check for NA values in the calculated statistics
+if (is.na(mean_start) || is.na(sd_start) || is.na(mean_end) || is.na(sd_end)) {
+  stop("One or more statistics could not be calculated due to NA values.")
+}
+
+# Create a data frame to store the statistics
+circumference_stats <- data.frame(
+  mean_start = mean_start,
+  sd_start = sd_start,
+  mean_end = mean_end,
+  sd_end = sd_end
+)
+
+# Print the statistics
+print(circumference_stats)
+```
+The  R code imports a CSV file into an R object called `growth_data` and calculates the mean and standard deviation of tree circumference for the years 2005 and 2020. It utilizes the `$` operator to access the relevant columns while excluding any missing values. The code checks for NA values in the calculated statistics and halts execution if any statistic cannot be computed. A data frame is then created to store the calculated mean and standard deviation values, which are subsequently printed. To display the column names of the `growth_data` object, the `colnames(growth_data)` function can be used.
+The mean tree circumference at the start of the study (2005) was approximately 5.08 cm, with a standard deviation of 1.05 cm, indicating that the trees were relatively small and consistent in size at the beginning. By the end of the study (2020), the mean circumference increased significantly to about 49.91 cm, with a standard deviation of 22.18 cm, suggesting substantial growth over the 15-year period. The increase in standard deviation also indicates greater variability in tree growth rates, reflecting differences in individual tree responses to environmental conditions or management practices.
+
+```{r}
+# Load the necessary packages
+library(readr)
+library(ggplot2)
+
+# Reshape the data using base R
+growth_data_long <- data.frame(
+  Site = rep(growth_data$Site, each = 2),
+  Time = rep(c("Start (2005)", "End (2020)"), times = nrow(growth_data)),
+  Circumference = c(growth_data$Circumf_2005_cm, growth_data$Circumf_2020_cm)
+)
+
+# Create the box plot
+ggplot(growth_data_long, aes(x = Time, y = Circumference, fill = Site)) +
+  geom_boxplot() +
+  labs(title = "Tree Circumference at Start and End of Study",
+       x = "Time",
+       y = "Circumference (cm)") +
+  theme_minimal() +
+  theme(legend.title = element_blank())
+```
+
+The R code created a box plot to visualize tree circumference at the start (2005) and end (2020) of the study for both sites. It reshaped the `growth_data` dataset into a long format using the `data.frame()` function, which included columns for `Site`, `Time`, and `Circumference`. The `ggplot2` package was then utilized to generate the box plot, mapping `Time` to the x-axis and `Circumference` to the y-axis, with fill colors representing different sites. Customizations included a title, axis labels, and a minimal theme for clarity. The resulting box plot effectively illustrated differences in tree growth over the study period between the two sites.
+
+```{r}
+# Load necessary libraries
+library(readr)
+# Calculate growth from 2005 to 2020 and add it as a new column
+growth_data$Growth <- growth_data$Circumf_2020_cm - growth_data$Circumf_2005_cm
+# Calculate mean growth by site
+mean_growth <- aggregate(Growth ~ Site, data = growth_data, FUN = mean, na.rm = TRUE)
+# Print the mean growth by site
+print(mean_growth)
+```
+
+The R code calculates the mean growth of trees over the last 10 years for each site. It begins by loading the `readr` library, which is necessary for reading data. The code then computes the growth from 2005 to 2020 by subtracting the circumference measured in 2005 from that measured in 2020, storing the result in a new column called `Growth` within the `growth_data` object. Next, the code uses the `aggregate()` function to calculate the mean growth, grouped by site, while ignoring any missing values with `na.rm = TRUE`. Finally, the calculated mean growth values for each site are printed to the console, providing insights into the growth performance of trees at different locations.
+The northeast site had a mean growth of approximately 48.94 cm, while the southwest site had a lower mean growth of around 40.73 cm. This suggests that trees in the northeast experienced better growth compared to those in the southwest, potentially due to differences in environmental factors, soil quality, or management practices at the two sites.
+
+```{r}
+# Load necessary library
+library(readr)
+# Perform a t-test to compare growth between the two sites
+t_test_result <- t.test(Growth ~ Site, data = growth_data)
+# Display the t-test results
+print(t_test_result)
+# Extract and display the p-value
+p_value <- t_test_result$p.value
+cat("The p-value for the difference in growth between the two sites is:", p_value, "\n")
+```
+To estimate the p-value for the difference in 10-year growth between the two sites, a t-test was conducted using the "t.test()" function in R. The test compared the "Growth" variable between the two groups defined by the "Site" column in the dataset. The result of the t-test was printed, and the p-value was extracted and displayed using the "cat()" function to indicate whether there was a statistically significant difference in growth between the sites over the 10-year period.
+The Welch Two Sample t-test comparing the 10-year mean growth between the "northeast" and "southwest" sites yielded a t-statistic of 1.9121 and a p-value of 0.05912, which is slightly above the 0.05 significance threshold. This indicates that the difference in mean growth is not statistically significant at the 5% level, though it is close. The 95% confidence interval (-0.3226 to 16.7266) includes zero, supporting the conclusion that there is no strong evidence of a difference. Despite the "northeast" site showing higher mean growth, the result suggests this difference could be due to random variation.
