@@ -198,3 +198,123 @@ cat("The p-value for the difference in growth between the two sites is:", p_valu
 ```
 To estimate the p-value for the difference in 10-year growth between the two sites, a t-test was conducted using the "t.test()" function in R. The test compared the "Growth" variable between the two groups defined by the "Site" column in the dataset. The result of the t-test was printed, and the p-value was extracted and displayed using the "cat()" function to indicate whether there was a statistically significant difference in growth between the sites over the 10-year period.
 The Welch Two Sample t-test comparing the 10-year mean growth between the "northeast" and "southwest" sites yielded a t-statistic of 1.9121 and a p-value of 0.05912, which is slightly above the 0.05 significance threshold. This indicates that the difference in mean growth is not statistically significant at the 5% level, though it is close. The 95% confidence interval (-0.3226 to 16.7266) includes zero, supporting the conclusion that there is no strong evidence of a difference. Despite the "northeast" site showing higher mean growth, the result suggests this difference could be due to random variation.
+
+--- 
+
+title: "Examining Biological sequence diversity in ecoli and anaerococcus" 
+
+author: "Aishwarya,shrestha,Swanitha" 
+
+date: "2024-10-11" 
+
+output: html_document 
+
+--- 
+
+  
+
+```{r setup, include=FALSE} 
+
+# Set options for chunk output 
+
+knitr::opts_chunk$set(echo = TRUE) 
+
+``` 
+
+  
+
+This project investigates the coding DNA sequences (CDS) of Escherichia coli (E. coli) and Anaerococcus tetradius, two microorganisms with distinct ecological niches and metabolic pathways. E. coli, a well-researched bacterium found in the intestines of warm-blooded organisms, is notable for its versatility and rapid growth, making it an ideal model for studies on gene regulation and microbial interactions. In contrast, A. tetradius, associated with anaerobic environments, has fewer coding sequences and unique metabolic adaptations, offering insights into evolutionary strategies and niche specialization. 
+
+  
+
+The analysis began with downloading and counting the coding DNA sequences (CDS) for both Escherichia coli (E. coli) and Anaerococcus tetradius. The following code was employed to download the CDS for E. coli from the Ensembl database, decompress the file, and subsequently read the sequences: 
+
+  
+
+```{r} 
+
+# Install the readr package  
+
+install.packages("readr") 
+
+``` 
+
+```{r} 
+
+library(R.utils) 
+
+ # URL for E. coli CDS data 
+
+URL="http://ftp.ensemblgenomes.org/pub/bacteria/release-53/fasta/bacteria_0_collection/escherichia_coli_str_k_12_substr_mg1655_gca_000005845/cds/Escherichia_coli_str_k_12_substr_mg1655_gca_000005845.ASM584v2.cds.all.fa.gz" 
+
+  
+
+download.file(URL,destfile="ecoli_cds.fa.gz") 
+
+  
+
+gunzip("ecoli_cds.fa.gz", overwrite=TRUE) 
+
+ # URL for Anaerococcus tetradius CDS data 
+
+URL="https://ftp.ensemblgenomes.ebi.ac.uk/pub/bacteria/release-59/fasta/bacteria_12_collection/anaerococcus_tetradius_gca_001546165/cds/Anaerococcus_tetradius_gca_001546165.ASM154616v1.cds.all.fa.gz" 
+
+  
+
+download.file(URL,destfile="anaerococcus_cds.fa.gz") 
+
+  
+
+gunzip("anaerococcus_cds.fa.gz", overwrite=TRUE) 
+
+ # Install the seqinr package for reading FASTA files 
+
+install.packages("seqinr") 
+
+  
+
+library(seqinr) 
+
+# Read the CDS sequences for both organisms  
+
+anaerococcus_cds <- seqinr::read.fasta("anaerococcus_cds.fa") 
+
+  
+
+anaerococcus_cds_count <- length(anaerococcus_cds) 
+
+  
+
+ecoli_cds <- seqinr::read.fasta("ecoli_cds.fa") 
+
+  
+
+  
+
+ecoli_cds_count <- length(ecoli_cds) 
+
+ # Create a data frame to summarize CDS counts 
+
+cds_table <- data.frame( 
+
+  
+
+Organism = c("Anaerococcus tetradius", "E. coli"), 
+
+  
+
+CDS_Count = c(anaerococcus_cds_count, ecoli_cds_count) 
+
+  
+
+) 
+
+ # Print the table summarizing the CDS counts 
+
+print(cds_table) 
+
+  
+
+``` 
+
+  
