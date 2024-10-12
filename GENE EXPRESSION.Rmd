@@ -82,44 +82,6 @@ hist(pip$Mean_Expression,
 Objective here is to visualize the distribution of mean expression values across all genes. Using hist function creates a histogram of the Mean_Expression values. A histogram that visually represents the distribution of gene expression means, highlighting patterns such as central tendency and variability. 
 
 ```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
+# Display the column names of the growth_data dataset
+colnames(growth_data)
 ```
