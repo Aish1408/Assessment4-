@@ -1,0 +1,125 @@
+---
+title: "RNA-Seq Analysis, Growth Data Analysis, and Biological Sequence Diversity
+  in Comparative Genomics"
+author: "Aish, Swanitha, Shreshta"
+date: "2024-10-11"
+output: html_document
+---
+
+```{r}
+install.packages("R.utils")
+library(R.utils)
+```
+ī
+```{r}
+install.packages("seqinr")
+library(seqinr)
+```
+```{r, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
+# Define the URL for the gene expression data
+URL<- "https://raw.githubusercontent.com/ghazkha/Assessment4/main/gene_expression.tsv"
+# Read the gene expression data
+pip=read.table(URL,stringsAsFactors = FALSE, header= TRUE,row.names = 1)
+pip
+# Check the structure of the data
+str(pip)
+# Display the values for the first six genes
+head(pip, 6)
+```
+Objective of the above code is to import the gene expression data into R for analysis, where, read.table function is used to read TSV file, specifying that the first row contains headers and first column contains gene identifiers. This results in data frame where each row represents a gene and each column represents a sample.
+OUTCOME: A well structured data frame ready for future analysis.
+
+
+
+```{r}
+# Calculate the mean of each columns (genes) and add it as a new column
+pip=colMeans(t(pip))
+# Display the first six rows including the new column
+head(pip, 6)
+```
+Objective behind this code is to calculate average expression level of each gene across all samples. rowMean funstion is used in order to compute the mean for each row (gene). this mean value as a new column is called Mean_expression in the data frame. 
+An updated data frame with an additional column representing the mean expression for all gene is the outcome of this code.
+
+```{r}
+# Ensure pip is a data frame
+pip <- as.data.frame(pip)
+# Calculate the mean of each row (genes) and add it as a new column
+pip$Mean_Expression <- rowMeans(pip)
+ordered_pip <- pip[order(-pip$Mean_Expression), ]
+# Select and display the top 10 genes
+top_10_genes <- head(ordered_pip, 10)
+print(top_10_genes)
+```
+The above can be used to identify the genes with highest average expression levels.
+Data was sorted in descending order based on Mean_Expression column, where top 10 genes were selcted from the sorted list. The above outcome is list of top 10 genes with highest mean expression values. 
+
+```{r}
+# Ensure pip is a data frame
+pip <- as.data.frame(pip)
+# Calculate the mean of each row (genes) and add it as a new column
+pip$Mean_Expression <- rowMeans(pip)
+# Determine the number of genes with a mean expression less than 10
+num_genes_low_mean <- sum(pip$Mean_Expression < 10)
+# Display the result
+print(num_genes_low_mean)
+```
+The above cide determines how many genes have mean expression value below threshold of 10, where, sum function is used to count number of genes in Mean_Expression less than 10. The count of genes with mean expression values below 10, providing insights into expression landscape.
+
+```{r}
+# Create a histogram of the Mean_Expression values
+hist(pip$Mean_Expression,
+     # Title of the histogram
+     main = "Histogram of Mean Expression Values",
+     # Label for the x-axis
+     xlab = "Mean Expression",
+     # Label for the y-axis
+     ylab = "Frequency",
+     # Color of the bars
+     col = "lightblue",
+     # Color of the bars
+     border = "black")
+```
+Objective here is to visualize the distribution of mean expression values across all genes. Using hist function creates a histogram of the Mean_Expression values. A histogram that visually represents the distribution of gene expression means, highlighting patterns such as central tendency and variability. 
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
