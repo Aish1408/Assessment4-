@@ -253,7 +253,7 @@ Examining the biological sequence diversity started with downloading the entire 
  
 After reading the CDS files, calculated the number of coding sequences present in each organism.
  
-As seen, E. coli has significantly more coding sequences (4239) than Anaerococcus tetradius (1836). This difference could be attributed to the organism's genome size, functional complexity, or evolutionary factors.
+The output indicates that E. coli has 4,239 coding sequences (CDS), while Anaerococcus tetradius has 1,836. This notable difference can be attributed to several factors: genome size, as E. coli typically has a larger genome that encodes more proteins; functional complexity, with E. coli's metabolic versatility requiring a greater variety of genes; and evolutionary factors, where processes like gene duplication or horizontal gene transfer may have contributed to E. coli's higher CDS count compared to the less-studied anaerobic bacterium, Anaerococcus tetradius.
  
 The analysis continued by calculating the total coding DNA content for both Escherichia coli (E. coli) and Anaerococcus tetradius. The lengths of individual coding sequences were summarized and summed to obtain the total coding DNA content for each organism. The following code was utilized for this purpose:
 ```{r}
