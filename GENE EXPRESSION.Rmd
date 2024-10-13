@@ -51,8 +51,7 @@ ordered_pip <- pip[order(-pip$Mean_Expression), ]
 top_10_genes <- head(ordered_pip, 10)
 print(top_10_genes)
 ```
-The above can be used to identify the genes with highest average expression levels.
-Data was sorted in descending order based on Mean_Expression column, where top 10 genes were selcted from the sorted list. The above outcome is list of top 10 genes with highest mean expression values. 
+The script processes a gene expression dataset to identify the top 10 genes with the highest average expression levels. It first ensures the dataset is a data frame, calculates the mean expression for each gene across all samples, and then sorts the genes based on their mean expression in descending order. Finally, it selects and displays the top 10 genes with the highest mean expression. The purpose is to prioritize genes with the most significant expression, which could be of interest for further analysis.
 
 ```{r}
 # Ensure pip is a data frame
@@ -64,7 +63,7 @@ num_genes_low_mean <- sum(pip$Mean_Expression < 10)
 # Display the result
 print(num_genes_low_mean)
 ```
-The above cide determines how many genes have mean expression value below threshold of 10, where, sum function is used to count number of genes in Mean_Expression less than 10. The count of genes with mean expression values below 10, providing insights into expression landscape.
+The above code determines how many genes have mean expression value below threshold of 10, where, sum function is used to count number of genes in Mean_Expression less than 10. The count of genes with mean expression values below 10, providing insights into expression landscape.
 
 ```{r}
 # Create a histogram of the Mean_Expression values
@@ -80,7 +79,7 @@ hist(pip$Mean_Expression,
      # Color of the bars
      border = "black")
 ```
-Objective here is to visualize the distribution of mean expression values across all genes. Using hist function creates a histogram of the Mean_Expression values. A histogram that visually represents the distribution of gene expression means, highlighting patterns such as central tendency and variability. 
+The Objective here is to visualize the distribution of mean expression values across all genes. Using hist function creates a histogram of the Mean_Expression values. A histogram that visually represents the distribution of gene expression means, highlighting patterns such as central tendency and variability. 
 
 
 ---
