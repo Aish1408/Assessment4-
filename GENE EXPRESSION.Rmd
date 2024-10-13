@@ -273,17 +273,10 @@ Total_Coding_DNA = c(total_coding_dna_anaerococcus, total_coding_dna_ecoli)
 )
 print(coding_dna_table)
 ```
-Total Coding DNA Content     Calculated the... by AISH TALLURI
-AISH TALLURI
-5:08 AM
-Total Coding DNA Content
- 
- 
+Total Coding DNA Content    
 Calculated the total length of coding DNA for both organisms by summing the lengths of all coding sequences.
- 
 The total coding DNA content of E. coli is more than double that of Anaerococcus tetradius, corresponding to the higher number of coding sequences in E. coli. This difference reflects the greater functional and metabolic diversity in E. coli, which requires more genes to perform various cellular processes.
- 
- 
+
 The analysis proceeded to assess the distribution of coding sequence lengths for both Escherichia coli (E. coli) and Anaerococcus tetradius. The lengths of individual coding sequences were calculated, and their distributions were visualized using boxplots to illustrate the variation in coding sequence lengths. The following R code was implemented to perform this analysis:
  
 ```{r}
